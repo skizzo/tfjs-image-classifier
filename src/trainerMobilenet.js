@@ -72,7 +72,7 @@ const loadImages = (imagePaths, pretrainedModel) => {
           const diffMs = new Date().getTime() - startMs
           const msPerItem = diffMs / (i + 1)
           const imagesLeft = imagesTotal - (i + 1)
-          const msLeft = (imagesTotal - i) * msPerItem
+          const msLeft = imagesLeft * msPerItem
           const sLeft = msLeft / 1000
           log(`Image ${spaced(i + 1, 3)}/${imagePaths.length} loaded: ${image}, ${imagesLeft} images left, ${Math.ceil(sLeft)}s left, ${Math.round(msPerItem)}ms/image.`)
 
@@ -177,7 +177,7 @@ const trainerMobilenet = {
   pretrainedModelOwn: null, // trained with own images
   trainingData: null,
   model: null, // trained model ..
-  history: null, // .. and its history
+  fitInfoModel: null, // .. and its history
   imageLabels: null, // folder names in /images
 
   init: async () => {
@@ -188,34 +188,61 @@ const trainerMobilenet = {
     return {success: true}
   },
 
-  trainImages: async () => {
-    log("Training Images..")
+  trainImages: async (epochs = 20) => {
     const layer = this.pretrainedModel.getLayer("conv_pw_13_relu")
     this.pretrainedModelOwn = tf.model({
       inputs: this.pretrainedModel.inputs,
       outputs: layer.output,
     })
 
-    this.trainingData = await getTrainingData()
+    this.trainingData = await getTrainingData({epochs})
     const {images, imagePaths, imageLabels} = this.trainingData
-    // let imagePaths = []
     this.imageLabels = imageLabels
-    const xs = await loadImages(imagePaths, this.pretrainedModelOwn)
-    const ys = addLabels(this.imageLabels)
 
-    const classes = getLabelsAsObject(this.imageLabels)
-    let classLength = Object.keys(classes).length
-    // debugger
+    log("Training Images..")
 
-    this.model = getModel(classLength)
-    this.history = await this.model.fit(xs, ys, {epochs: 40, shuffle: true})
-    log("Training Images done.")
+    const modelJsonPathByHash = path.join(__dirname, `../models/${this.trainingData.hash}/model.json`)
+    if (fs.existsSync(modelJsonPathByHash)) {
+      log(`Loading Model from saved models (Hash: ${this.trainingData.hash})!`)
+      this.model = await tf.loadLayersModel(`file://${modelJsonPathByHash}`)
+    } else {
+      log(`Loading Images and Labels (Hash: ${this.trainingData.hash})..`)
+      const xs = await loadImages(imagePaths, this.pretrainedModelOwn)
+      const ys = addLabels(this.imageLabels)
+
+      const classes = getLabelsAsObject(this.imageLabels)
+      let classLength = Object.keys(classes).length
+
+      log("Getting Model..")
+      this.model = getModel(classLength)
+
+      log("Fitting Model..")
+      this.fitInfoModel = await this.model.fit(xs, ys, {
+        //
+        epochs,
+        shuffle: true,
+        callbacks: {
+          //
+          onEpochEnd: (epoch, logs) => {
+            console.log(` Epoch #${epoch}: ${JSON.stringify(logs)}`)
+            // console.log(logs.loss)
+          },
+        },
+      })
+      // debugger
+      // log("Final accuracy", this.fitInfoModel.history.acc)
+
+      log("Saving Model..")
+      const pathModelSave = path.join(__dirname, `../models/${this.trainingData.hash}`)
+      await this.model.save(`file://${pathModelSave}`)
+
+      log("Training Images done.")
+    }
     return {success: true}
   },
 
   classify: async (imageCheckFilename, expectedLabel = "") => {
     // log(`Classifying image '${imageCheckFilename}'..`)
-
     const imagePath = path.join(__dirname, `../images/validation/${imageCheckFilename}`)
     const imageExists = fs.existsSync(imagePath)
     if (!imageExists) {

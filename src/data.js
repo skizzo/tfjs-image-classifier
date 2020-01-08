@@ -8,9 +8,56 @@ const IMAGE_EXTENSIONS = [".jpg", ".jpeg"]
 let LABELS_BLACKLIST = ["interstellar_blue_1", "interstellar_blue_2", /*"interstellar_orange",*/ "xecafuturism_1", "xecafuturism_2"]
 // LABELS_BLACKLIST = []
 
-const MAX_IMAGES_PER_LABEL = 100 // dogs/cats contain 12.000 images..
+const MAX_IMAGES_PER_LABEL = 1000 // dogs/cats contain 12.000 images..
 
-const getTrainingData = () => {
+const hashCode = (s) => {
+  return s.split("").reduce(function(a, b) {
+    a = (a << 5) - a + b.charCodeAt(0)
+    return a & a
+  }, 0)
+}
+
+/**
+ * Calculate a 32 bit FNV-1a hash
+ * Found here: https://gist.github.com/vaiorabbit/5657561
+ * Ref.: http://isthe.com/chongo/tech/comp/fnv/
+ *
+ * @param {string} str the input value
+ * @param {boolean} [asString=false] set to true to return the hash value as
+ *     8-digit hex string instead of an integer
+ * @param {integer} [seed] optionally pass the hash of the previous chunk
+ * @returns {integer | string}
+ */
+function hashFnv32a(str, asString, seed) {
+  /*jshint bitwise:false */
+  var i,
+    l,
+    hval = seed === undefined ? 0x811c9dc5 : seed
+
+  for (i = 0, l = str.length; i < l; i++) {
+    hval ^= str.charCodeAt(i)
+    hval += (hval << 1) + (hval << 4) + (hval << 7) + (hval << 8) + (hval << 24)
+  }
+  if (asString) {
+    // Convert to 8 digit hex string
+    return ("0000000" + (hval >>> 0).toString(16)).substr(-8)
+  }
+  return hval >>> 0
+}
+
+const serialize = (obj) => {
+  if (Array.isArray(obj)) {
+    return JSON.stringify(obj.map((i) => serialize(i)))
+  } else if (typeof obj === "object" && obj !== null) {
+    return Object.keys(obj)
+      .sort()
+      .map((k) => `${k}:${serialize(obj[k])}`)
+      .join("|")
+  }
+  return obj
+}
+
+const getTrainingData = (extraData = {}) => {
   return new Promise((resolve) => {
     let images = [] // Array of Objects: {dir, imagesInDir}
     let imagePaths = [] // Array of Strings, equal the amount of total images
@@ -38,7 +85,11 @@ const getTrainingData = () => {
         }
       }
     }
-    resolve({images, imagePaths, imageLabels})
+    const trainingData = {images, imagePaths, imageLabels}
+    const trainingDataSerialized = serialize({...trainingData, ...extraData})
+    const trainingDataSerializedHash = hashCode(trainingDataSerialized)
+    const trainingDataSerializedHash2 = hashFnv32a(trainingDataSerialized, true, 1)
+    resolve({...trainingData, hash: trainingDataSerializedHash2})
   })
 }
 

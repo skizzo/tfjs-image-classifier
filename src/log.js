@@ -1,4 +1,4 @@
-const spaced = (txt, amount = 5, fill = " ") => {
+const spaced = (txt, amount = 7, fill = " ") => {
   let txtNew = txt + ""
   while (txtNew.length < amount) {
     txtNew = fill + txtNew
