@@ -7,7 +7,7 @@ const tf = require("@tensorflow/tfjs")
 const mobilenet = require("@tensorflow-models/mobilenet")
 const knnClassifier = require("@tensorflow-models/knn-classifier")
 const tfnode = require("@tensorflow/tfjs-node")
-const sharp = require("sharp")
+// const sharp = require("sharp")
 
 const {log} = require("./log")
 const {getTrainingData} = require("./data")
@@ -56,7 +56,7 @@ const trainerKnn = {
           let imagesTotal = 0
 
           if (USE_CUSTOM_TRAINING_DATA) {
-            for (const trainingData of trainingDatas) {
+            for (const trainingData of trainingDatas.images) {
               const {dir, imagesInDir} = trainingData
               for (const image of imagesInDir) {
                 log(`Training with image ${dir}/${image}..`)

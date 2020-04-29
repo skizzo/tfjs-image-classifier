@@ -6,30 +6,11 @@ const IMAGE_EXTENSIONS = [".jpg", ".jpeg"]
 
 // folders that should not be included in training data
 let LABELS_BLACKLIST = ["interstellar_blue_1", "interstellar_blue_2", /*"interstellar_orange",*/ "xecafuturism_1", "xecafuturism_2"]
-// LABELS_BLACKLIST = []
+LABELS_BLACKLIST = ["notebook", "mobile", "wood", "cat", "dog"]
 
-const MAX_IMAGES_PER_LABEL = 1000 // dogs/cats contain 12.000 images..
+const MAX_IMAGES_PER_LABEL = 10 // dogs/cats contain 12.000 images..
 
-const hashCode = (s) => {
-  return s.split("").reduce(function(a, b) {
-    a = (a << 5) - a + b.charCodeAt(0)
-    return a & a
-  }, 0)
-}
-
-/**
- * Calculate a 32 bit FNV-1a hash
- * Found here: https://gist.github.com/vaiorabbit/5657561
- * Ref.: http://isthe.com/chongo/tech/comp/fnv/
- *
- * @param {string} str the input value
- * @param {boolean} [asString=false] set to true to return the hash value as
- *     8-digit hex string instead of an integer
- * @param {integer} [seed] optionally pass the hash of the previous chunk
- * @returns {integer | string}
- */
-function hashFnv32a(str, asString, seed) {
-  /*jshint bitwise:false */
+const hashFnv32a = (str, asString, seed) => {
   var i,
     l,
     hval = seed === undefined ? 0x811c9dc5 : seed
@@ -87,9 +68,8 @@ const getTrainingData = (extraData = {}) => {
     }
     const trainingData = {images, imagePaths, imageLabels}
     const trainingDataSerialized = serialize({...trainingData, ...extraData})
-    const trainingDataSerializedHash = hashCode(trainingDataSerialized)
-    const trainingDataSerializedHash2 = hashFnv32a(trainingDataSerialized, true, 1)
-    resolve({...trainingData, hash: trainingDataSerializedHash2})
+    const hash = hashFnv32a(trainingDataSerialized, true, 1)
+    resolve({...trainingData, hash})
   })
 }
 

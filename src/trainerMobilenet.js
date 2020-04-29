@@ -1,3 +1,5 @@
+// https://thekevinscott.com/image-classification-with-javascript/
+
 const tf = require("@tensorflow/tfjs")
 const tfnode = require("@tensorflow/tfjs-node")
 const fs = require("fs")
@@ -9,6 +11,107 @@ const {getTrainingData} = require("./data")
 const labelsObject = require("../data/imagenet_labels.json")
 let labels = []
 Object.keys(labelsObject).map((label) => labels.push(label))
+
+///////////////////////////////////////////////////////////////////////////////
+const trainerMobilenet = {
+  pretrainedModel: null, // mobilenet_v1_0.25_224
+
+  pretrainedModelOwn: null, // trained with own images
+  trainingData: null,
+  model: null, // trained model ..
+  fitInfoModel: null, // .. and its history
+  imageLabels: null, // folder names in /images
+
+  init: async () => {
+    log("Loading Model..")
+    this.pretrainedModel = await tf.loadLayersModel("https://storage.googleapis.com/tfjs-models/tfjs/mobilenet_v1_0.25_224/model.json")
+    log("Loading Model done.")
+    await trainerMobilenet.trainImages()
+    return {success: true}
+  },
+
+  trainImages: async (epochs = 20) => {
+    const layer = this.pretrainedModel.getLayer("conv_pw_13_relu")
+    this.pretrainedModelOwn = tf.model({
+      inputs: this.pretrainedModel.inputs,
+      outputs: layer.output,
+    })
+
+    this.trainingData = await getTrainingData({epochs})
+    const {images, imagePaths, imageLabels} = this.trainingData
+    this.imageLabels = imageLabels
+
+    log("Training Images..")
+
+    const modelJsonPathByHash = path.join(__dirname, `../models/${this.trainingData.hash}/model.json`)
+    if (fs.existsSync(modelJsonPathByHash)) {
+      log(`Loading Model from saved models (Hash: ${this.trainingData.hash})!`)
+      this.model = await tf.loadLayersModel(`file://${modelJsonPathByHash}`)
+    } else {
+      log(`Loading Images and Labels (Hash: ${this.trainingData.hash})..`)
+      const xs = await loadImages(imagePaths, this.pretrainedModelOwn)
+      const ys = addLabels(this.imageLabels)
+
+      const classes = getLabelsAsObject(this.imageLabels)
+      let classLength = Object.keys(classes).length
+
+      log("Getting Model..")
+      this.model = getModel(classLength)
+
+      log("Fitting Model..")
+      this.fitInfoModel = await this.model.fit(xs, ys, {
+        //
+        epochs,
+        shuffle: true,
+        callbacks: {
+          //
+          onEpochEnd: (epoch, logs) => {
+            console.log(` Epoch #${epoch}: ${JSON.stringify(logs)}`)
+            // console.log(logs.loss)
+          },
+        },
+      })
+      // debugger
+      // log("Final accuracy", this.fitInfoModel.history.acc)
+
+      log("Saving Model..")
+      const pathModelSave = path.join(__dirname, `../models/${this.trainingData.hash}`)
+      await this.model.save(`file://${pathModelSave}`)
+
+      // TODO: Now convert this to .tflite
+
+      log("Training Images done.")
+    }
+    return {success: true}
+  },
+
+  classify: async (imageCheckFilename, expectedLabel = "") => {
+    // log(`Classifying image '${imageCheckFilename}'..`)
+    const imagePath = path.join(__dirname, `../images/validation/${imageCheckFilename}`)
+    const imageExists = fs.existsSync(imagePath)
+    if (!imageExists) {
+      return {error: "image-not-found"}
+    } else {
+      const USE_TRAINING_DATA = true
+      if (USE_TRAINING_DATA) {
+        const {label, labelIndex} = await makePrediction(this.model, this.pretrainedModelOwn, this.imageLabels, imagePath)
+        if (!!expectedLabel && label != expectedLabel) {
+          console.error(`Not received expected label '${expectedLabel}'.`)
+        }
+        return {imageCheckFilename, labelIndex, label}
+      } else {
+        // using pretrained model
+        const img = await loadImage(imagePath)
+        const processedImage = loadAndProcessImage(img)
+        const prediction = this.pretrainedModel.predict(processedImage)
+        const labelIndex = prediction.as1D().argMax().dataSync()[0] // prettier-ignore
+        const label = labelsObject[labelIndex]
+        // console.log("label: " + label)
+        return {label, labelIndex}
+      }
+    }
+  },
+}
 
 const loadImage = (imagePath) =>
   new Promise((resolve) => {
@@ -168,105 +271,6 @@ const getModel = (numberOfClasses) => {
     metrics: ["accuracy"],
   })
   return model
-}
-
-///////////////////////////////////////////////////////////////////////////////
-const trainerMobilenet = {
-  pretrainedModel: null, // mobilenet_v1_0.25_224
-
-  pretrainedModelOwn: null, // trained with own images
-  trainingData: null,
-  model: null, // trained model ..
-  fitInfoModel: null, // .. and its history
-  imageLabels: null, // folder names in /images
-
-  init: async () => {
-    log("Loading Model..")
-    this.pretrainedModel = await tf.loadLayersModel("https://storage.googleapis.com/tfjs-models/tfjs/mobilenet_v1_0.25_224/model.json")
-    log("Loading Model done.")
-    await trainerMobilenet.trainImages()
-    return {success: true}
-  },
-
-  trainImages: async (epochs = 20) => {
-    const layer = this.pretrainedModel.getLayer("conv_pw_13_relu")
-    this.pretrainedModelOwn = tf.model({
-      inputs: this.pretrainedModel.inputs,
-      outputs: layer.output,
-    })
-
-    this.trainingData = await getTrainingData({epochs})
-    const {images, imagePaths, imageLabels} = this.trainingData
-    this.imageLabels = imageLabels
-
-    log("Training Images..")
-
-    const modelJsonPathByHash = path.join(__dirname, `../models/${this.trainingData.hash}/model.json`)
-    if (fs.existsSync(modelJsonPathByHash)) {
-      log(`Loading Model from saved models (Hash: ${this.trainingData.hash})!`)
-      this.model = await tf.loadLayersModel(`file://${modelJsonPathByHash}`)
-    } else {
-      log(`Loading Images and Labels (Hash: ${this.trainingData.hash})..`)
-      const xs = await loadImages(imagePaths, this.pretrainedModelOwn)
-      const ys = addLabels(this.imageLabels)
-
-      const classes = getLabelsAsObject(this.imageLabels)
-      let classLength = Object.keys(classes).length
-
-      log("Getting Model..")
-      this.model = getModel(classLength)
-
-      log("Fitting Model..")
-      this.fitInfoModel = await this.model.fit(xs, ys, {
-        //
-        epochs,
-        shuffle: true,
-        callbacks: {
-          //
-          onEpochEnd: (epoch, logs) => {
-            console.log(` Epoch #${epoch}: ${JSON.stringify(logs)}`)
-            // console.log(logs.loss)
-          },
-        },
-      })
-      // debugger
-      // log("Final accuracy", this.fitInfoModel.history.acc)
-
-      log("Saving Model..")
-      const pathModelSave = path.join(__dirname, `../models/${this.trainingData.hash}`)
-      await this.model.save(`file://${pathModelSave}`)
-
-      log("Training Images done.")
-    }
-    return {success: true}
-  },
-
-  classify: async (imageCheckFilename, expectedLabel = "") => {
-    // log(`Classifying image '${imageCheckFilename}'..`)
-    const imagePath = path.join(__dirname, `../images/validation/${imageCheckFilename}`)
-    const imageExists = fs.existsSync(imagePath)
-    if (!imageExists) {
-      return {error: "image-not-found"}
-    } else {
-      const USE_TRAINING_DATA = true
-      if (USE_TRAINING_DATA) {
-        const {label, labelIndex} = await makePrediction(this.model, this.pretrainedModelOwn, this.imageLabels, imagePath)
-        if (!!expectedLabel && label != expectedLabel) {
-          console.error(`Not received expected label '${expectedLabel}'.`)
-        }
-        return {imageCheckFilename, labelIndex, label}
-      } else {
-        // using pretrained model
-        const img = await loadImage(imagePath)
-        const processedImage = loadAndProcessImage(img)
-        const prediction = this.pretrainedModel.predict(processedImage)
-        const labelIndex = prediction.as1D().argMax().dataSync()[0] // prettier-ignore
-        const label = labelsObject[labelIndex]
-        // console.log("label: " + label)
-        return {label, labelIndex}
-      }
-    }
-  },
 }
 
 module.exports = trainerMobilenet

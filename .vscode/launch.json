@@ -7,11 +7,38 @@
 		{
 			"type": "node",
 			"request": "launch",
-			"name": "Train",
+			"name": "MobileNet",
 			"skipFiles": [
 				"<node_internals>/**"
 			],
-			"program": "${workspaceFolder}/train.js"
+			"program": "${workspaceFolder}/mobilenet.js"
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "KNN",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"program": "${workspaceFolder}/knn.js"
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Posters",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"program": "${workspaceFolder}/posters.js"
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Linear",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"program": "${workspaceFolder}/linear.js"
 		}
 	]
 }

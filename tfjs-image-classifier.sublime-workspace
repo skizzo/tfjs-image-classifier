@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"exists",
+				"existsSync(path) -> bool\tfn "
+			],
+			[
+				"traiin",
+				"trainingData\t? "
+			],
+			[
+				"expe",
+				"expectedLabel"
+			],
+			[
+				"imagepa",
+				"imagePaths"
+			],
+			[
 				"request",
 				"requestLatestAppVersion"
 			],
@@ -498,27 +514,125 @@
 			[
 				"faqItems",
 				"faqItemsByCategory"
-			],
-			[
-				"faqitems",
-				"faqItemsByCategory"
-			],
-			[
-				"category",
-				"categoryKey"
-			],
-			[
-				"FA",
-				"FAQ_CATEGORIES"
-			],
-			[
-				"TabCo",
-				"TabContentContainer"
 			]
 		]
 	},
 	"buffers":
 	[
+		{
+			"file": "README.md",
+			"settings":
+			{
+				"buffer_size": 306,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "mobilenet.js",
+			"settings":
+			{
+				"buffer_size": 2454,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "package.json",
+			"settings":
+			{
+				"buffer_size": 919,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "linear.js",
+			"settings":
+			{
+				"buffer_size": 2376,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "knn.js",
+			"settings":
+			{
+				"buffer_size": 1631,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "posters.js",
+			"settings":
+			{
+				"buffer_size": 2404,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/trainerLinear.js",
+			"settings":
+			{
+				"buffer_size": 111,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/trainerMobilenet.js",
+			"settings":
+			{
+				"buffer_size": 9345,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/trainerKnn.js",
+			"settings":
+			{
+				"buffer_size": 2905,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/log.js",
+			"settings":
+			{
+				"buffer_size": 382,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/data.js",
+			"settings":
+			{
+				"buffer_size": 2699,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": ".eslintrc.js",
+			"settings":
+			{
+				"buffer_size": 796,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/helpers.js",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -800,10 +914,17 @@
 	},
 	"expanded_folders":
 	[
-		"/Users/steff/Github/tfjs-image-classifier"
+		"/Users/steff/Github/tfjs-image-classifier",
+		"/Users/steff/Github/tfjs-image-classifier/src"
 	],
 	"file_history":
 	[
+		"/Users/steff/Github/tfjs-image-classifier/src/trainerPosters.js",
+		"/Users/steff/Github/tfjs-image-classifier/package.json",
+		"/Users/steff/Github/tfjs-image-classifier/.gitignore",
+		"/Users/steff/Github/tfjs-image-classifier/my-model-1/model.json",
+		"/Users/steff/Github/tfjs-image-classifier/train.js",
+		"/Users/steff/Github/tfjs-image-classifier/src/trainerKnn.js",
 		"/Users/steff/Github/famba/app/package.json",
 		"/Users/steff/Github/famba/app/src/data/store.js",
 		"/Users/steff/Github/famba/app/src/data/actions/index.js",
@@ -925,13 +1046,7 @@
 		"/Users/steff/Github/iazzu/app/src/view/components/CArtworkPropsValue/CArtworkPropsValue_app.js",
 		"/Users/steff/Github/iazzu/app/src/view/components/CArtworkViewIcon.js",
 		"/Users/steff/Github/iazzu/app/src/view/screens/SGalleryTab/SGalleryTab_app.js",
-		"/Users/steff/Github/iazzu/app/src/view/components/CArtworkPropsKey/CArtworkPropsKey_app.js",
-		"/Users/steff/Github/iazzu/app/src/view/components/buttons/CButton.js",
-		"/Users/steff/Github/iazzu/app/src/view/components/buttons/CButtonRounded.js",
-		"/Users/steff/Github/iazzu/app/src/view/components/CArtworkViewIcon/CArtworkViewIcon_app.js",
-		"/Users/steff/Github/iazzu/app/src/view/components/CArtworkProps/CArtworkProps_app.js",
-		"/Users/steff/Github/iazzu/app/src/view/components/CArtworkHeaderBar/CArtworkHeaderBar_app.js",
-		"/Users/steff/Github/iazzu/app/src/view/components/debug/CDebugValue/CDebugValue_app.js"
+		"/Users/steff/Github/iazzu/app/src/view/components/CArtworkPropsKey/CArtworkPropsKey_app.js"
 	],
 	"find":
 	{
@@ -949,6 +1064,45 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"trainerMobilenet",
+			"trainerPosters",
+			"trainingDataSerializedHash2",
+			"USE_CUSTOM_TRAINING_DATA",
+			"console.log",
+			"trainerMobilenet",
+			"knnClassifier",
+			"/image",
+			"\"",
+			"this.pretrainedModelOwn",
+			"\"",
+			"this.",
+			"tfnode",
+			".jpg",
+			"\"",
+			"resBlue",
+			": \" + JSON",
+			"/image",
+			"resNotebook2",
+			"resNotebook1",
+			"mobile/",
+			"mobile",
+			"\"mobile\"",
+			"resMobile",
+			"\"",
+			"makePrediction",
+			"labelPrediction",
+			"trainer2",
+			"trainerMoblienet",
+			"trainer2",
+			"  ",
+			"trainer2",
+			"resizeImagePathToBuffer",
+			"trainer",
+			"224",
+			"getTrainingData",
+			"pretrainedModelOwn",
+			"/images",
+			"loadImage"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -966,8 +1120,609 @@
 	"groups":
 	[
 		{
+			"selected": 3,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "README.md",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 306,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								306,
+								306
+							]
+						],
+						"settings":
+						{
+							"SL.132.region_keys":
+							[
+							],
+							"SL.15.region_keys":
+							[
+							],
+							"SL.38.region_keys":
+							[
+							],
+							"SL.52.region_keys":
+							[
+							],
+							"auto_complete": false,
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/MarkdownEditing/Markdown.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "mobilenet.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2454,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								183,
+								245
+							]
+						],
+						"settings":
+						{
+							"SL.132.region_keys":
+							[
+							],
+							"SL.15.region_keys":
+							[
+							],
+							"SL.53.region_keys":
+							[
+								"sublime_linter.protected_regions"
+							],
+							"auto_complete": false,
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "package.json",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 919,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								99,
+								99
+							]
+						],
+						"settings":
+						{
+							"SL.110.region_keys":
+							[
+							],
+							"SL.133.region_keys":
+							[
+							],
+							"SL.85.region_keys":
+							[
+							],
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/zzz A File Icon zzz/aliases/JSON (NPM).sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "linear.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2376,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1258,
+								1258
+							]
+						],
+						"settings":
+						{
+							"SL.146.region_keys":
+							[
+								"sublime_linter.protected_regions"
+							],
+							"SL.41.region_keys":
+							[
+							],
+							"auto_complete": false,
+							"incomplete_sync": null,
+							"open_with_edit": true,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "knn.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1631,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								498,
+								498
+							]
+						],
+						"settings":
+						{
+							"SL.134.region_keys":
+							[
+							],
+							"SL.63.region_keys":
+							[
+								"sublime_linter.protected_regions"
+							],
+							"auto_complete": false,
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "posters.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2404,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								428,
+								428
+							]
+						],
+						"settings":
+						{
+							"SL.135.region_keys":
+							[
+							],
+							"SL.64.region_keys":
+							[
+								"sublime_linter.protected_regions"
+							],
+							"auto_complete": false,
+							"incomplete_sync": null,
+							"open_with_edit": true,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 6,
+					"file": "src/trainerLinear.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 111,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								111,
+								111
+							]
+						],
+						"settings":
+						{
+							"SL.145.region_keys":
+							[
+								"sublime_linter.protected_regions"
+							],
+							"SL.44.region_keys":
+							[
+							],
+							"auto_complete": false,
+							"incomplete_sync": null,
+							"open_with_edit": true,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "src/trainerMobilenet.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9345,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								513,
+								540
+							]
+						],
+						"settings":
+						{
+							"SL.134.region_keys":
+							[
+								"sublime_linter.protected_regions",
+								"SL.eslint.Gutter.|region.redish markup.error.sublime_linter|dot",
+								"SL.eslint.Highlights.|1b37a09afd0abeb4905004a12a964eb5e0f9725aa56dc46ca9b619538d64de59|region.redish markup.error.sublime_linter|32"
+							],
+							"SL.137.region_keys":
+							[
+								"SL.eslint.Gutter.|region.redish markup.error.sublime_linter|dot",
+								"SL.eslint.Highlights.|4ceec800e8c8e69de33bacf8a1b82466bf6d902bcb9b3e3e895ff364a11c5df7|region.redish markup.error.sublime_linter|32",
+								"sublime_linter.protected_regions"
+							],
+							"SL.18.region_keys":
+							[
+								"sublime_linter.protected_regions",
+								"SL.eslint.Highlights.|fc05c30eec79bc889fedaa3e4e8e1eab470fca7f2ea6dd029fa606ee6a3d1f24|region.redish markup.error.sublime_linter|32",
+								"SL.eslint.Gutter.|region.redish markup.error.sublime_linter|dot"
+							],
+							"SL.40.region_keys":
+							[
+								"SL.eslint.Highlights.|fc05c30eec79bc889fedaa3e4e8e1eab470fca7f2ea6dd029fa606ee6a3d1f24|region.redish markup.error.sublime_linter|32",
+								"SL.eslint.Gutter.|region.redish markup.error.sublime_linter|dot",
+								"sublime_linter.protected_regions"
+							],
+							"SL.54.region_keys":
+							[
+								"sublime_linter.protected_regions",
+								"SL.eslint.Highlights.|4ceec800e8c8e69de33bacf8a1b82466bf6d902bcb9b3e3e895ff364a11c5df7|region.redish markup.error.sublime_linter|32",
+								"SL.eslint.Gutter.|region.redish markup.error.sublime_linter|dot"
+							],
+							"auto_complete": false,
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "src/trainerKnn.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2905,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								644,
+								644
+							]
+						],
+						"settings":
+						{
+							"SL.138.region_keys":
+							[
+								"SL.eslint.Gutter.|region.redish markup.error.sublime_linter|dot",
+								"SL.eslint.Highlights.|29b4bdcea177fd753a5def573f193cd72e1d8596c0e2b86bbeff891fd5a9f029|region.redish markup.error.sublime_linter|32",
+								"sublime_linter.protected_regions"
+							],
+							"SL.61.region_keys":
+							[
+								"SL.eslint.Highlights.|29b4bdcea177fd753a5def573f193cd72e1d8596c0e2b86bbeff891fd5a9f029|region.redish markup.error.sublime_linter|32",
+								"sublime_linter.protected_regions",
+								"SL.eslint.Gutter.|region.redish markup.error.sublime_linter|dot"
+							],
+							"auto_complete": false,
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "src/log.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 382,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								215,
+								215
+							]
+						],
+						"settings":
+						{
+							"SL.141.region_keys":
+							[
+							],
+							"SL.19.region_keys":
+							[
+							],
+							"SL.42.region_keys":
+							[
+							],
+							"auto_complete": false,
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "src/data.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2699,
+						"regions":
+						{
+							"col_811C9DC5":
+							{
+								"flags": 16,
+								"regions":
+								[
+									[
+										542,
+										552
+									]
+								],
+								"scope": "col_811C9DC5"
+							}
+						},
+						"selection":
+						[
+							[
+								375,
+								375
+							]
+						],
+						"settings":
+						{
+							"SL.135.region_keys":
+							[
+								"sublime_linter.protected_regions"
+							],
+							"SL.20.region_keys":
+							[
+								"sublime_linter.protected_regions",
+								"SL.eslint.Gutter.|region.redish markup.error.sublime_linter|dot",
+								"SL.eslint.Highlights.|0e86ee695a5d94cebc260a850120597b14ca2095ba9f056981402727bdf3cf10|region.redish markup.error.sublime_linter|32"
+							],
+							"SL.43.region_keys":
+							[
+								"SL.eslint.Highlights.|0e86ee695a5d94cebc260a850120597b14ca2095ba9f056981402727bdf3cf10|region.redish markup.error.sublime_linter|32",
+								"SL.eslint.Gutter.|region.redish markup.error.sublime_linter|dot",
+								"sublime_linter.protected_regions"
+							],
+							"SL.56.region_keys":
+							[
+								"sublime_linter.protected_regions"
+							],
+							"SL.59.region_keys":
+							[
+							],
+							"auto_complete": false,
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": ".eslintrc.js",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 796,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								796
+							]
+						],
+						"settings":
+						{
+							"SL.118.region_keys":
+							[
+							],
+							"SL.141.region_keys":
+							[
+							],
+							"SL.83.region_keys":
+							[
+							],
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/zzz A File Icon zzz/aliases/JavaScript (ESLint).sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "src/helpers.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"SL.138.region_keys":
+							[
+							],
+							"incomplete_sync": null,
+							"open_with_edit": true,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 12,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -988,11 +1743,18 @@
 				0,
 				1,
 				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.548684813941,
 			1.0
 		],
 		"rows":
@@ -1584,7 +2346,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 264.0,
+	"side_bar_width": 249.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

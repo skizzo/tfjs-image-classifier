@@ -33,40 +33,40 @@ const main = async () => {
   const resBunny = await trainerMobilenet.classify("bunny.jpeg", "x_bunny")
   log(JSON.stringify(resBunny, null, 2))
 
-  // const resOrange = await trainerMobilenet.classify("orange_01.jpg", "interstellar_orange")
   const resOrange = await trainerMobilenet.classify("InterstellarOrange_500_700-11July2017.jpg", "interstellar_orange")
   log(JSON.stringify(resOrange, null, 2))
 
+  const resOrange2 = await trainerMobilenet.classify("orange_01.jpg", "interstellar_orange")
+  log(JSON.stringify(resOrange2, null, 2))
+
   // Cats & Dogs
+  const TEST_CATS_DOGS = false
+  if (TEST_CATS_DOGS) {
+    const catsDogsTests = [
+      //
+      {f: "1", l: "dog"},
+      {f: "2", l: "dog"},
+      {f: "3", l: "dog"},
+      {f: "4", l: "dog"},
+      {f: "5", l: "cat"},
+      {f: "6", l: "cat"},
+      {f: "7", l: "cat"},
+      {f: "8", l: "cat"},
+      {f: "9", l: "cat"},
+      {f: "10", l: "cat"},
+      {f: "11", l: "cat"},
+      {f: "12", l: "dog"},
+    ]
 
-  const catsDogsTests = [
-    //
-    {f: "1", l: "dog"},
-    {f: "2", l: "dog"},
-    {f: "3", l: "dog"},
-    {f: "4", l: "dog"},
-    {f: "5", l: "cat"},
-    {f: "6", l: "cat"},
-    {f: "7", l: "cat"},
-    {f: "8", l: "cat"},
-    {f: "9", l: "cat"},
-    {f: "10", l: "cat"},
-    {f: "11", l: "cat"},
-    {f: "12", l: "dog"},
-  ]
-
-  for (const cdt of catsDogsTests) {
-    const {f, l} = cdt
-    const resCd = await trainerMobilenet.classify(`catsdogs/${f}.jpg`, l)
-    log(JSON.stringify(resCd, null, 2))
+    for (const cdt of catsDogsTests) {
+      const {f, l} = cdt
+      const resCd = await trainerMobilenet.classify(`catsdogs/${f}.jpg`, l)
+      log(JSON.stringify(resCd, null, 2))
+    }
   }
-
-  // const resDrum = await trainerMobilenet.classify("drum.jpg")
-  // log(JSON.stringify(resDrum, null, 2))
-
   return true
 }
 
 main().then(() => {
-  log("Done with train.js.")
+  log("Done with mobilenet.js.")
 })
